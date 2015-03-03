@@ -28,12 +28,12 @@ class Aijko_WidgetImageChooser_Block_Chooser extends Mage_Adminhtml_Block_Widget
                 $url = Mage::getBaseUrl('media') . $url;
             }
 
-            $previewHtml = '<a href="' . $url . '"'
-                         . ' onclick="imagePreview(\'' . $element->getHtmlId() . '_image\'); return false;">'
-                         . '<img src="' . $url . '" id="' . $element->getHtmlId() . '_image" title="' . $element->getValue() . '"'
-                         . ' alt="' . $element->getValue() . '" height="40" class="small-image-preview v-middle"'
-                         . ' style="margin-top:7px; border:1px solid grey" />'
-                         . '</a> ';
+            $previewHtml = '<br><a href="' . $url . '"'
+                . ' onclick="imagePreview(\'' . $element->getHtmlId() . '_image\'); return false;">'
+                . '<img src="' . $url . '" id="' . $element->getHtmlId() . '_image" title="' . $element->getValue() . '"'
+                . ' alt="' . $element->getValue() . '" height="60" class="small-image-preview v-middle"'
+                . ' style="margin-top:7px; border:1px solid grey" />'
+                . '</a> ';
         }
 
         $prefix = $element->getForm()->getHtmlIdPrefix();
@@ -60,7 +60,13 @@ class Aijko_WidgetImageChooser_Block_Chooser extends Mage_Adminhtml_Block_Widget
             ->setDisabled($element->getReadonly())
             ->setStyle('margin-left:10px;margin-top:7px');
 
-        $element->setData('after_element_html', $previewHtml . $chooseButton->toHtml() . $removeButton->toHtml());
+        $comment = '';
+
+        if ($element->getComment()) {
+            $comment .= '<p class="note"><span>' . $element->getComment() . '</span></p>';
+        }
+
+        $element->setData('after_element_html', $previewHtml . $chooseButton->toHtml() . $removeButton->toHtml() . $comment);
 
         $this->_element = $element;
         return $this->toHtml();
